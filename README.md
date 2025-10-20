@@ -2,8 +2,8 @@ Thêm comment giải thích logic, không chỉ copy từ AI.
 
 Ghi rõ trong commit message hoặc README con:
 
-Input là gì?
+Shape của mô hình tập train hay test ?
+Tham số mô hình này là gì ?
+Ý nghĩa của 1 cell hoặc 1 dòng code
 
-Output mong muốn?
-
-Tại sao dùng kỹ thuật này?
+REVIEW chéo(A hỏi B, B trả lời và ngược lại)
