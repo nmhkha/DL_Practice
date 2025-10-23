@@ -1,0 +1,4 @@
+practice1/data/
+*.pth
+*.gz
+*.ubyte
