@@ -33,6 +33,7 @@ class SimpleLSTM(nn.Module):
     def init_hidden(self, batch_size, device):
         # Initialize hidden and cell state with zeros
         # Shape: (num_layers, batch_size, hidden_size)
-        h0 = torch.zeros(self.num_layers, batch_size, self.hidden_size)
-        c0 = torch.zeros(self.num_layers, batch_size, self.hidden_size)
+        h0 = torch.zeros(self.num_layers, batch_size, self.hidden_size, device=device)
+        c0 = torch.zeros(self.num_layers, batch_size, self.hidden_size, device=device)
+
         return (h0, c0)
