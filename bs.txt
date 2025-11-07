@@ -1,0 +1,1 @@
+Bs: x10(data points) x3(sáng trưa chiều) x1(dự đoán cho 1 điểm)

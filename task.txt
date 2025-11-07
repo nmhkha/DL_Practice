@@ -1,0 +1,2 @@
+log diagram
+ptich MSE, MAE --> MAPE (evaluation !!!)
