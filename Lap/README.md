@@ -61,57 +61,57 @@ Thành phần gây biến động kết quả
     print("Device: ",DEVICE)
 
 # Chuẩn hoá và tạo sequence
-    - Chuẩn bị dữ liệu
-        close = df[['Close']].copy()
+- Chuẩn bị dữ liệu
+    close = df[['Close']].copy()
 
-    - Lấy cột Close của giá cổ phiếu (hoặc giá tài sản) để dự báo.
-    - close là dataframe 1 cột, cần reshape sau này cho MinMaxScale
-    - Chia tỷ lệ 70/15/15 theo time series
-        Cutoff index theo ti le 70/15/15 tren time series
-            n_total = len(close)
-            #Tao sequences, tong samples = n_total - SEQ_LEN
-            n_samples = n_total - SEQ_LEN
-            train_samples = int(n_samples*0.70)
-            val_samples = int(n_samples * 0.15)
-            test_samples = n_samples - train_samples - val_samples
-            n_total: tổng số ngày.
-            n_samples: tổng số sequence bạn có thể tạo với SEQ_LEN.
-            Bạn chia train/val/test trước khi tạo sequences, để tránh leakage.
-            Fit MinMaxScaler chỉ trên train
+- Lấy cột Close của giá cổ phiếu (hoặc giá tài sản) để dự báo.
+- close là dataframe 1 cột, cần reshape sau này cho MinMaxScale
+- Chia tỷ lệ 70/15/15 theo time series
+    Cutoff index theo ti le 70/15/15 tren time series
+        n_total = len(close)
+        #Tao sequences, tong samples = n_total - SEQ_LEN
+        n_samples = n_total - SEQ_LEN
+        train_samples = int(n_samples*0.70)
+        val_samples = int(n_samples * 0.15)
+        test_samples = n_samples - train_samples - val_samples
+        n_total: tổng số ngày.
+        n_samples: tổng số sequence bạn có thể tạo với SEQ_LEN.
+        Bạn chia train/val/test trước khi tạo sequences, để tránh leakage.
+        Fit MinMaxScaler chỉ trên train
 
-            train_raw_end = SEQ_LEN + train_samples #exclusive index for raw array slicing
-            print("train_raw end index (exclusive): ", train_raw_end)      
-
-
-        scaler = MinMaxScaler(feature_range=(0, 1))
-        scaler.fit(close.values[:train_raw_end]) # fit only on train portion of raw close values
-        scaled_all = scaler.transform(close.values) # transform whole series
-        Quan trọng: fit scaler chỉ trên train portion, tức là close[:train_raw_end].
-        train_raw_end = SEQ_LEN + train_samples vì sequence đầu tiên sử dụng SEQ_LEN ngày đầu tiên.
-    - Sau đó transform toàn bộ chuỗi, bao gồm val/test. Đây là cách chuẩn để tránh data leakage.
-
-Tạo sequences (sliding window)
-# tao sequences (sliding window)
-X_list, y_list = [], []
-for i in range(SEQ_LEN, len(scaled_all)):
-    X_list.append(scaled_all[i-SEQ_LEN:i, 0]) # window of length SEQ_LEN
-    y_list.append(scaled_all[i, 0]) # next-day target
+        train_raw_end = SEQ_LEN + train_samples #exclusive index for raw array slicing
+        print("train_raw end index (exclusive): ", train_raw_end)      
 
 
-X = np.array(X_list)
-y = np.array(y_list)
+    scaler = MinMaxScaler(feature_range=(0, 1))
+    scaler.fit(close.values[:train_raw_end]) # fit only on train portion of raw close values
+    scaled_all = scaler.transform(close.values) # transform whole series
+    Quan trọng: fit scaler chỉ trên train portion, tức là close[:train_raw_end].
+    train_raw_end = SEQ_LEN + train_samples vì sequence đầu tiên sử dụng SEQ_LEN ngày đầu tiên.
+- Sau đó transform toàn bộ chuỗi, bao gồm val/test. Đây là cách chuẩn để tránh data leakage.
+
+# Tạo sequences (sliding window)
+#tao sequences (sliding window)
+    X_list, y_list = [], []
+    for i in range(SEQ_LEN, len(scaled_all)):
+        X_list.append(scaled_all[i-SEQ_LEN:i, 0]) # window of length SEQ_LEN
+        y_list.append(scaled_all[i, 0]) # next-day target
 
 
-#reshape X -> (n_samples, seq_len, n_features)
-X = X.reshape(X.shape[0], X.shape[1],1)
+    X = np.array(X_list)
+    y = np.array(y_list)
 
 
-print("X shape:", X.shape, "y shape:", y.shape)
+    #reshape X -> (n_samples, seq_len, n_features)
+    X = X.reshape(X.shape[0], X.shape[1],1)
 
-X_list: từng window dài SEQ_LEN.
-y_list: giá kế tiếp (next day).
-Reshape X để có shape (samples, seq_len, n_features) cho LSTM/RNN.
-y là vector (samples,) cho target.
+
+    print("X shape:", X.shape, "y shape:", y.shape)
+
+- X_list: từng window dài SEQ_LEN.
+- y_list: giá kế tiếp (next day).
+- Reshape X để có shape (samples, seq_len, n_features) cho LSTM/RNN.
+- y là vector (samples,) cho target.
 → Sliding window giúp “cắt” chuỗi dài thành các mẫu nhỏ mà mô hình có thể học được mối quan hệ giữa lịch sử giá và giá ngày tiếp theo.
 
 Output 
