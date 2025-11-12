@@ -182,12 +182,12 @@ Khởi tạo lớp LSTM
             #Fully connected layer to map hidden state to ouput
             self.fc = nn.Linear(hidden_size, output_size)
 
-    → Xây dựng kiến trúc mô hình (LSTM + fully connected)
-    - input_size: số feature của input, ở đây là 1 (Close price).
-    - hidden_size: số neuron trong LSTM hidden layer.
-    - num_layers: số tầng LSTM xếp chồng (stacked LSTM).
-    - output_size: số output mà mô hình dự đoán, ở đây là 1 (dự đoán giá tiếp theo).
-    - batch_first=True: input có shape (batch_size, seq_len, input_size).
+→ Xây dựng kiến trúc mô hình (LSTM + fully connected)
+- input_size: số feature của input, ở đây là 1 (Close price).
+- hidden_size: số neuron trong LSTM hidden layer.
+- num_layers: số tầng LSTM xếp chồng (stacked LSTM).
+- output_size: số output mà mô hình dự đoán, ở đây là 1 (dự đoán giá tiếp theo).
+- batch_first=True: input có shape (batch_size, seq_len, input_size).
 
 Forward pass
 
@@ -212,14 +212,14 @@ Forward pass
             output = self.fc(out[:, -1, :])
             return output, hidden
 
-    → Xử lý input sequence, học mối quan hệ theo thời gian, dự đoán output
-    - input_seq: (batch_size, seq_len, input_size) → chuỗi giá của nhiều batch.
-    - hidden: tuple (h0, c0) của hidden state và cell state.
-    - Nếu hidden=None, hàm sẽ khởi tạo bằng 0 cho batch hiện tại.
-    - out: LSTM output cho toàn bộ sequence (batch_size, seq_len, hidden_size).
-    - out[:, -1, :]: lấy output của time step cuối cùng (giá trị dự đoán dựa trên toàn bộ sequence).
-    - self.fc(out[:, -1, :]): map hidden state cuối cùng sang giá trị output (ví dụ giá tiếp theo).
-    - Trả về (output, hidden). Hidden state có thể dùng tiếp cho sequence tiếp theo (stateful LSTM).
+→ Xử lý input sequence, học mối quan hệ theo thời gian, dự đoán output
+- input_seq: (batch_size, seq_len, input_size) → chuỗi giá của nhiều batch.
+- hidden: tuple (h0, c0) của hidden state và cell state.
+- Nếu hidden=None, hàm sẽ khởi tạo bằng 0 cho batch hiện tại.
+- out: LSTM output cho toàn bộ sequence (batch_size, seq_len, hidden_size).
+- out[:, -1, :]: lấy output của time step cuối cùng (giá trị dự đoán dựa trên toàn bộ sequence).
+- self.fc(out[:, -1, :]): map hidden state cuối cùng sang giá trị output (ví dụ giá tiếp theo).
+- Trả về (output, hidden). Hidden state có thể dùng tiếp cho sequence tiếp theo (stateful LSTM).
 
 Khởi tạo hidden state
 
@@ -232,10 +232,10 @@ Khởi tạo hidden state
 
             return (h0, c0)
 
-    → Khởi tạo trạng thái ban đầu (hidden + cell) để LSTM bắt đầu hoạt động
-    - Hidden state (h0) và cell state (c0) đều khởi tạo bằng 0.
-    - Shape: (num_layers, batch_size, hidden_size) → đúng chuẩn PyTorch LSTM.
-    - device đảm bảo tensor nằm trên CPU/GPU tương thích.
+→ Khởi tạo trạng thái ban đầu (hidden + cell) để LSTM bắt đầu hoạt động
+- Hidden state (h0) và cell state (c0) đều khởi tạo bằng 0.
+- Shape: (num_layers, batch_size, hidden_size) → đúng chuẩn PyTorch LSTM.
+- device đảm bảo tensor nằm trên CPU/GPU tương thích.
 
 # Loss function
 criterion = torch.nn.MSELoss()
