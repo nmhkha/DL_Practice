@@ -243,7 +243,8 @@ Loss function
 - MSELoss = Mean Squared Error (lỗi bình phương trung bình).
 - Trong bài toán dự báo giá, MSE thường được dùng để đo sai số giữa giá thực và giá dự đoán.
 - y_pred càng gần y_true → loss càng nhỏ → mô hình tốt hơn.
-Mục đích: Cung cấp hàm mục tiêu để mô hình biết “lỗi của nó là bao nhiêu” và cần điều chỉnh.
+- Mục đích: Cung cấp hàm mục tiêu để mô hình biết “lỗi của nó là bao nhiêu” và cần điều chỉnh.
+
 Learning rate
 
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
@@ -251,7 +252,7 @@ Learning rate
 - Adam là thuật toán tối ưu hóa gradient hiện đại, hiệu quả cho neural network.
 - model.parameters() → các tham số của mô hình cần cập nhật (weights, bias).
 - lr=0.001 → learning rate, tốc độ cập nhật gradient.
-Mục đích: Cập nhật tham số mô hình dựa trên gradient của loss function để giảm MSE trong quá trình huấn luyện.
+- Mục đích: Cập nhật tham số mô hình dựa trên gradient của loss function để giảm MSE trong quá trình huấn luyện.
 
 # Training loop
 Loop qua các epoch
