@@ -61,34 +61,34 @@ Thành phần gây biến động kết quả
     print("Device: ",DEVICE)
 
 # Chuẩn hoá và tạo sequence
-    Chuẩn bị dữ liệu
+    - Chuẩn bị dữ liệu
         close = df[['Close']].copy()
 
-    Lấy cột Close của giá cổ phiếu (hoặc giá tài sản) để dự báo.
-    close là dataframe 1 cột, cần reshape sau này cho MinMaxScale
-    Chia tỷ lệ 70/15/15 theo time series
-    Cutoff index theo ti le 70/15/15 tren time series
-        n_total = len(close)
-        #Tao sequences, tong samples = n_total - SEQ_LEN
-        n_samples = n_total - SEQ_LEN
-        train_samples = int(n_samples*0.70)
-        val_samples = int(n_samples * 0.15)
-        test_samples = n_samples - train_samples - val_samples
-        n_total: tổng số ngày.
-        n_samples: tổng số sequence bạn có thể tạo với SEQ_LEN.
-        Bạn chia train/val/test trước khi tạo sequences, để tránh leakage.
-        Fit MinMaxScaler chỉ trên train
+    - Lấy cột Close của giá cổ phiếu (hoặc giá tài sản) để dự báo.
+    - close là dataframe 1 cột, cần reshape sau này cho MinMaxScale
+    - Chia tỷ lệ 70/15/15 theo time series
+        Cutoff index theo ti le 70/15/15 tren time series
+            n_total = len(close)
+            #Tao sequences, tong samples = n_total - SEQ_LEN
+            n_samples = n_total - SEQ_LEN
+            train_samples = int(n_samples*0.70)
+            val_samples = int(n_samples * 0.15)
+            test_samples = n_samples - train_samples - val_samples
+            n_total: tổng số ngày.
+            n_samples: tổng số sequence bạn có thể tạo với SEQ_LEN.
+            Bạn chia train/val/test trước khi tạo sequences, để tránh leakage.
+            Fit MinMaxScaler chỉ trên train
 
-        train_raw_end = SEQ_LEN + train_samples #exclusive index for raw array slicing
-        print("train_raw end index (exclusive): ", train_raw_end)      
+            train_raw_end = SEQ_LEN + train_samples #exclusive index for raw array slicing
+            print("train_raw end index (exclusive): ", train_raw_end)      
 
 
-scaler = MinMaxScaler(feature_range=(0, 1))
-scaler.fit(close.values[:train_raw_end]) # fit only on train portion of raw close values
-scaled_all = scaler.transform(close.values) # transform whole series
-Quan trọng: fit scaler chỉ trên train portion, tức là close[:train_raw_end].
-train_raw_end = SEQ_LEN + train_samples vì sequence đầu tiên sử dụng SEQ_LEN ngày đầu tiên.
-Sau đó transform toàn bộ chuỗi, bao gồm val/test. Đây là cách chuẩn để tránh data leakage.
+        scaler = MinMaxScaler(feature_range=(0, 1))
+        scaler.fit(close.values[:train_raw_end]) # fit only on train portion of raw close values
+        scaled_all = scaler.transform(close.values) # transform whole series
+        Quan trọng: fit scaler chỉ trên train portion, tức là close[:train_raw_end].
+        train_raw_end = SEQ_LEN + train_samples vì sequence đầu tiên sử dụng SEQ_LEN ngày đầu tiên.
+    - Sau đó transform toàn bộ chuỗi, bao gồm val/test. Đây là cách chuẩn để tránh data leakage.
 
 Tạo sequences (sliding window)
 # tao sequences (sliding window)
