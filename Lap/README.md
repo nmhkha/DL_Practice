@@ -1,16 +1,16 @@
-Dự báo Giá Cổ phiếu (Stock Price Forecasting)
-Dự án này trình bày một mô hình học sâu để dự báo giá cổ phiếu bằng cách sử dụng Mạng thần kinh Hồi quy Dài-Ngắn hạn (LSTM).
-Mục tiêu (Goal)
-Mục tiêu chính là dự đoán giá đóng cửa (Close) của cổ phiếu vào ngày hôm sau (next-day) dựa trên chuỗi dữ liệu giá trong 60 ngày trước đó.
-Dữ liệu (Dataset)
-Nguồn: Dữ liệu được tải tự động từ Yahoo Finance.
-Mã cổ phiếu: GOOGL (Alphabet Inc.).
-Khung thời gian: 2 năm (period='2y').
-Đặc trưng (Feature): Chỉ sử dụng giá đóng cửa (Close) cho việc dự báo.
-Mô hình (Model)
-Loại mô hình: LSTM (Long Short-Term Memory).
-Loại tác vụ: Hồi quy (Regression).
-Chi tiết: Mô hình sử dụng dữ liệu của 60 ngày liên tiếp (SEQ_LEN = 60) để dự đoán giá của ngày thứ 61.
+# Dự báo Giá Cổ phiếu (Stock Price Forecasting)
+    Dự án này trình bày một mô hình học sâu để dự báo giá cổ phiếu bằng cách sử dụng Mạng thần kinh Hồi quy Dài-Ngắn hạn (LSTM).
+    Mục tiêu (Goal)
+    Mục tiêu chính là dự đoán giá đóng cửa (Close) của cổ phiếu vào ngày hôm sau (next-day) dựa trên chuỗi dữ liệu giá trong 60 ngày trước đó.
+    Dữ liệu (Dataset)
+    Nguồn: Dữ liệu được tải tự động từ Yahoo Finance.
+    Mã cổ phiếu: GOOGL (Alphabet Inc.).
+    Khung thời gian: 2 năm (period='2y').
+    Đặc trưng (Feature): Chỉ sử dụng giá đóng cửa (Close) cho việc dự báo.
+    Mô hình (Model)
+    Loại mô hình: LSTM (Long Short-Term Memory).
+    Loại tác vụ: Hồi quy (Regression).
+    Chi tiết: Mô hình sử dụng dữ liệu của 60 ngày liên tiếp (SEQ_LEN = 60) để dự đoán giá của ngày thứ 61.
 Thư viện sử dụng 
 torch (PyTorch) : dùng để xây dựn mô hình Deep Learning LSTM.
 yfinance (để tải dữ liệu): tải dữ liệu cổ phiếu.
@@ -42,32 +42,32 @@ Thành phần gây biến động kết quả
 ➡️ Nếu không cố định seed, bạn chạy hôm nay và chạy lại mai → kết quả khác nhau → không thể tin tưởng hay so sánh.
 
 # Reproducibility: cố định seed để kết quả lặp lại
-SEED = 42
-random.seed(SEED)
-np.random.seed(SEED)
-torch.manual_seed(SEED)
-if torch.cuda.is_available():
-    torch.cuda.manual_seed_all(SEED)
+    SEED = 42
+    random.seed(SEED)
+    np.random.seed(SEED)
+    torch.manual_seed(SEED)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(SEED)
 
 #Cau hinh
-CSV_PATH = "GOOGL_2y.csv"
-SEQ_LEN = 60 # Window length (60 ngay) dùng 60 ngày trước để dự đoán ngày kế tiếp
-BATCH_SIZE = 32
-HIDDEN_SIZE = 64
-NUM_LAYERS = 2
-LR = 0.001
-EPOCHS = 200
-DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-print("Device: ",DEVICE)
+    CSV_PATH = "GOOGL_2y.csv"
+    SEQ_LEN = 60 # Window length (60 ngay) dùng 60 ngày trước để dự đoán ngày kế tiếp
+    BATCH_SIZE = 32
+    HIDDEN_SIZE = 64
+    NUM_LAYERS = 2
+    LR = 0.001
+    EPOCHS = 200
+    DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+    print("Device: ",DEVICE)
 
 Chuẩn hoá và tạo sequence
 Chuẩn bị dữ liệu
-close = df[['Close']].copy()
+    close = df[['Close']].copy()
 
  Lấy cột Close của giá cổ phiếu (hoặc giá tài sản) để dự báo.
 close là dataframe 1 cột, cần reshape sau này cho MinMaxScale
 Chia tỷ lệ 70/15/15 theo time series
-# Cutoff index theo ti le 70/15/15 tren time series
+Cutoff index theo ti le 70/15/15 tren time series
 n_total = len(close)
 #Tao sequences, tong samples = n_total - SEQ_LEN
 n_samples = n_total - SEQ_LEN
