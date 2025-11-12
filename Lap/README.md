@@ -134,7 +134,6 @@ Output
 # Chia train/val/test
 - Xác định cutoff cho train/val/test
     
-    
     sample_cut_train = train_samples
     sample_cut_val = train_samples + val_samples
     sample_cut_train = 309 → số sample dùng cho train.
@@ -142,7 +141,6 @@ Output
     Dựa trên các sample đã tạo từ sliding window (X, y).
 
 - Chia dữ liệu
-    
     
     X_train = X[:sample_cut_train]
     y_train =y[:sample_cut_train]
