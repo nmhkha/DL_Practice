@@ -84,7 +84,7 @@ Thành phần gây biến động kết quả
         print("train_raw end index (exclusive): ", train_raw_end)      
 
 
-    + scaler = MinMaxScaler(feature_range=(0, 1))
+    scaler = MinMaxScaler(feature_range=(0, 1))
     scaler.fit(close.values[:train_raw_end]) # fit only on train portion of raw close values
     scaled_all = scaler.transform(close.values) # transform whole series
     Quan trọng: fit scaler chỉ trên train portion, tức là close[:train_raw_end].
