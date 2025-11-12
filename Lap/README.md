@@ -347,7 +347,7 @@ Output:
 
 Visualize
 Loss
-
+![alt text](image.png)
 
 Đồ thị loss cho thấy cả Train Loss và Validation Loss đều giảm ổn định theo thời gian và tiến tới giá trị rất nhỏ (≈ 0.001 → 0.0002). Hai đường loss gần như song song và không tách rời nhau, cho thấy mô hình không gặp hiện tượng overfitting. Điều này chứng tỏ LSTM đã học được xu hướng biến động của giá cổ phiếu và có khả năng khái quát tốt trên dữ liệu chưa từng thấy.
 
