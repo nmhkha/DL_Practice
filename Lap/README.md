@@ -84,9 +84,9 @@ Thành phần gây biến động kết quả
         print("train_raw end index (exclusive): ", train_raw_end)      
 
 
-    scaler = MinMaxScaler(feature_range=(0, 1))
-    scaler.fit(close.values[:train_raw_end]) # fit only on train portion of raw close values
-    scaled_all = scaler.transform(close.values) # transform whole series
+        scaler = MinMaxScaler(feature_range=(0, 1))
+        scaler.fit(close.values[:train_raw_end]) # fit only on train portion of raw close values
+        scaled_all = scaler.transform(close.values) # transform whole series
     Quan trọng: fit scaler chỉ trên train portion, tức là close[:train_raw_end].
     train_raw_end = SEQ_LEN + train_samples vì sequence đầu tiên sử dụng SEQ_LEN ngày đầu tiên.
 - Sau đó transform toàn bộ chuỗi, bao gồm val/test. Đây là cách chuẩn để tránh data leakage.
