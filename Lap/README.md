@@ -237,24 +237,28 @@ Khởi tạo hidden state
 - Shape: (num_layers, batch_size, hidden_size) → đúng chuẩn PyTorch LSTM.
 - device đảm bảo tensor nằm trên CPU/GPU tương thích.
 
-# Loss function
-criterion = torch.nn.MSELoss()
-MSELoss = Mean Squared Error (lỗi bình phương trung bình).
-Trong bài toán dự báo giá, MSE thường được dùng để đo sai số giữa giá thực và giá dự đoán.
-y_pred càng gần y_true → loss càng nhỏ → mô hình tốt hơn.
+Loss function
+
+    criterion = torch.nn.MSELoss()
+- MSELoss = Mean Squared Error (lỗi bình phương trung bình).
+- Trong bài toán dự báo giá, MSE thường được dùng để đo sai số giữa giá thực và giá dự đoán.
+- y_pred càng gần y_true → loss càng nhỏ → mô hình tốt hơn.
 Mục đích: Cung cấp hàm mục tiêu để mô hình biết “lỗi của nó là bao nhiêu” và cần điều chỉnh.
 Learning rate
-optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
-Adam là thuật toán tối ưu hóa gradient hiện đại, hiệu quả cho neural network.
-model.parameters() → các tham số của mô hình cần cập nhật (weights, bias).
-lr=0.001 → learning rate, tốc độ cập nhật gradient.
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+
+- Adam là thuật toán tối ưu hóa gradient hiện đại, hiệu quả cho neural network.
+- model.parameters() → các tham số của mô hình cần cập nhật (weights, bias).
+- lr=0.001 → learning rate, tốc độ cập nhật gradient.
 Mục đích: Cập nhật tham số mô hình dựa trên gradient của loss function để giảm MSE trong quá trình huấn luyện.
-Training loop
- Loop qua các epoch
-for epoch in range(1, EPOCHS + 1):
-Mỗi epoch = 1 lượt chạy qua toàn bộ dữ liệu train.
-EPOCHS = số lần lặp tổng cộng để mô hình học dần.
+
+# Training loop
+Loop qua các epoch
+    
+        for epoch in range(1, EPOCHS + 1):
+    - Mỗi epoch = 1 lượt chạy qua toàn bộ dữ liệu train.
+    - EPOCHS = số lần lặp tổng cộng để mô hình học dần.
 Training phase
 # Training
     model.train()
