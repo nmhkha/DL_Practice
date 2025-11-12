@@ -133,6 +133,8 @@ Output
 - y là target kế tiếp.
 # Chia train/val/test
 - Xác định cutoff cho train/val/test
+    
+    
     sample_cut_train = train_samples
     sample_cut_val = train_samples + val_samples
     sample_cut_train = 309 → số sample dùng cho train.
@@ -140,6 +142,8 @@ Output
     Dựa trên các sample đã tạo từ sliding window (X, y).
 
 - Chia dữ liệu
+    
+    
     X_train = X[:sample_cut_train]
     y_train =y[:sample_cut_train]
 
@@ -151,13 +155,9 @@ Output
     X_test = X[sample_cut_val:]
     y_test = y[sample_cut_val:]
 
-Train: lấy từ sample 0 đến 308 (309 samples)
-
-
-Validation: lấy từ sample 309 đến 374 (66 samples)
-
-
-Test: từ sample 375 đến hết (67 samples)
+- Train: lấy từ sample 0 đến 308 (309 samples)
+- Validation: lấy từ sample 309 đến 374 (66 samples)
+- Test: từ sample 375 đến hết (67 samples)
 Output 
 Dữ liệu đã được chia theo thứ tự thời gian (time series split), không shuffle.
 Mỗi tập có dạng (samples, sequence length, features) cho LSTM/RNN input.
