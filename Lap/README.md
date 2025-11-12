@@ -257,11 +257,13 @@ Learning rate
 # Training loop
 Loop qua các epoch
     
-        for epoch in range(1, EPOCHS + 1):
-    - Mỗi epoch = 1 lượt chạy qua toàn bộ dữ liệu train.
-    - EPOCHS = số lần lặp tổng cộng để mô hình học dần.
+    for epoch in range(1, EPOCHS + 1):
+- Mỗi epoch = 1 lượt chạy qua toàn bộ dữ liệu train.
+- EPOCHS = số lần lặp tổng cộng để mô hình học dần.
+
 Training phase
-# Training
+    
+    #Training
     model.train()
     running_train_loss = 0.0
     for Xb, yb in train_loader:
@@ -283,21 +285,23 @@ Training phase
     avg_train_loss = running_train_loss / len(train_ds)
     train_losses.append(avg_train_loss)
 
-model.train() → bật chế độ training, cần thiết nếu có dropout/batchnorm.
-train_loader → cung cấp batch dữ liệu train.
-hidden = model.init_hidden(batch_size, DEVICE) → khởi tạo hidden + cell state cho batch.
-optimizer.zero_grad() → xóa gradient cũ trước khi tính gradient mới.
-preds, _ = model(Xb, hidden) → forward pass, dự đoán giá.
-preds.squeeze(1) → đưa shape (batch, 1) → (batch,) để match yb.
-loss = criterion(preds, yb) → tính MSE loss cho batch.
-loss.backward() → backpropagation, tính gradient.
-torch.nn.utils.clip_grad_norm_(...) → giới hạn gradient để tránh exploding gradient (LSTM dễ gặp).
-optimizer.step() → cập nhật weights dựa trên gradient.
-running_train_loss += loss.item() * batch_size → cộng loss từng batch.
-avg_train_loss = running_train_loss / len(train_ds) → tính loss trung bình epoch.
-train_losses.append(avg_train_loss) → lưu loss để plot learning curve.
+- model.train() → bật chế độ training, cần thiết nếu có dropout/batchnorm.
+- train_loader → cung cấp batch dữ liệu train.
+- hidden = model.init_hidden(batch_size, DEVICE) → khởi tạo hidden + cell state cho batch.
+- optimizer.zero_grad() → xóa gradient cũ trước khi tính gradient mới.
+- preds, _ = model(Xb, hidden) → forward pass, dự đoán giá.
+- preds.squeeze(1) → đưa shape (batch, 1) → (batch,) để match yb.
+- loss = criterion(preds, yb) → tính MSE loss cho batch.
+- loss.backward() → backpropagation, tính gradient.
+- torch.nn.utils.clip_grad_norm_(...) → giới hạn gradient để tránh exploding gradient (LSTM dễ gặp).
+- optimizer.step() → cập nhật weights dựa trên gradient.
+- running_train_loss += loss.item() * batch_size → cộng loss từng batch.
+- avg_train_loss = running_train_loss / len(train_ds) → tính loss trung bình epoch.
+- train_losses.append(avg_train_loss) → lưu loss để plot learning curve.
+
 Validation phase
-   # Validation
+    
+    #Validation
     model.eval()
     running_val_loss = 0.0
     with torch.no_grad():
@@ -311,14 +315,14 @@ Validation phase
     avg_val_loss = running_val_loss / len(val_ds)
     val_losses.append(avg_val_loss)
 
-model.eval() → bật chế độ evaluation, tắt dropout, batchnorm không update.
-with torch.no_grad(): → tắt tính gradient để tiết kiệm bộ nhớ.
-Tương tự như training, nhưng không backward, không update weights.
-Tính loss trung bình trên toàn bộ validation set → lưu vào val_losses để theo dõi.
-Đánh giá trên test set
-mae = mean_absolute_error(trues_price, preds_price) # Mức chênh lệch trung bình giữa dự đoán và giá thật
-mse = mean_squared_error(trues_price, preds_price)  # Phạt sai số lớn mạnh hơn, đo độ ổn định của mô hình
-rmse = np.sqrt(mse) # RMSE = √MSE → nên ta tự lấy căn.
+- model.eval() → bật chế độ evaluation, tắt dropout, batchnorm không update.
+- with torch.no_grad(): → tắt tính gradient để tiết kiệm bộ nhớ.
+- Tương tự như training, nhưng không backward, không update weights.
+- Tính loss trung bình trên toàn bộ validation set → lưu vào val_losses để theo dõi.
+- Đánh giá trên test set
+- mae = mean_absolute_error(trues_price, preds_price) # Mức chênh lệch trung bình giữa dự đoán và giá thật
+- mse = mean_squared_error(trues_price, preds_price)  # Phạt sai số lớn mạnh hơn, đo độ ổn định của mô hình
+- rmse = np.sqrt(mse) # RMSE = √MSE → nên ta tự lấy căn.
 
 
 
