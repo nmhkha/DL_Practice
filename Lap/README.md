@@ -1,29 +1,29 @@
 # Dự báo Giá Cổ phiếu (Stock Price Forecasting)
     Dự án này trình bày một mô hình học sâu để dự báo giá cổ phiếu bằng cách sử dụng Mạng thần kinh Hồi quy Dài-Ngắn hạn (LSTM).
-    Mục tiêu (Goal)
-    Mục tiêu chính là dự đoán giá đóng cửa (Close) của cổ phiếu vào ngày hôm sau (next-day) dựa trên chuỗi dữ liệu giá trong 60 ngày trước đó.
-    Dữ liệu (Dataset)
-    Nguồn: Dữ liệu được tải tự động từ Yahoo Finance.
-    Mã cổ phiếu: GOOGL (Alphabet Inc.).
-    Khung thời gian: 2 năm (period='2y').
-    Đặc trưng (Feature): Chỉ sử dụng giá đóng cửa (Close) cho việc dự báo.
-    Mô hình (Model)
-    Loại mô hình: LSTM (Long Short-Term Memory).
-    Loại tác vụ: Hồi quy (Regression).
-    Chi tiết: Mô hình sử dụng dữ liệu của 60 ngày liên tiếp (SEQ_LEN = 60) để dự đoán giá của ngày thứ 61.
-Thư viện sử dụng 
-torch (PyTorch) : dùng để xây dựn mô hình Deep Learning LSTM.
-yfinance (để tải dữ liệu): tải dữ liệu cổ phiếu.
-pandas: dùng nó để đọc, ghi, và thao tác với các DataFrame.
-numpy: giúp làm việc với mảng (array) và ma trận tốc độ cao.
-scikit-learn (sử dụng MinMaxScaler và các độ đo metrics): Dùng để đo lường hiệu suất, cụ thể là đo xem mô hình của bạn dự đoán "tệ" đến mức nào (tính toán lỗi).
-matplotlib (để vẽ biểu đồ): tạo ra các biểu đồ và đồ thị (như biểu đồ Loss và biểu đồ dự đoán).
+    - Mục tiêu (Goal)
+        Mục tiêu chính là dự đoán giá đóng cửa (Close) của cổ phiếu vào ngày hôm sau (next-day) dựa trên chuỗi dữ liệu giá trong 60 ngày trước đó.
+    - Dữ liệu (Dataset)
+        Nguồn: Dữ liệu được tải tự động từ Yahoo Finance.
+        Mã cổ phiếu: GOOGL (Alphabet Inc.).
+        Khung thời gian: 2 năm (period='2y').
+        Đặc trưng (Feature): Chỉ sử dụng giá đóng cửa (Close) cho việc dự báo.
+    - Mô hình (Model)
+        Loại mô hình: LSTM (Long Short-Term Memory).
+        Loại tác vụ: Hồi quy (Regression).
+        Chi tiết: Mô hình sử dụng dữ liệu của 60 ngày liên tiếp (SEQ_LEN = 60) để dự đoán giá của ngày thứ 61.
+# Thư viện sử dụng 
+- torch (PyTorch) : dùng để xây dựn mô hình Deep Learning LSTM.
+- yfinance (để tải dữ liệu): tải dữ liệu cổ phiếu.
+- pandas: dùng nó để đọc, ghi, và thao tác với các DataFrame.
+- numpy: giúp làm việc với mảng (array) và ma trận tốc độ cao.
+- scikit-learn (sử dụng MinMaxScaler và các độ đo metrics): Dùng để đo lường hiệu suất, cụ thể là đo xem mô hình của bạn dự đoán "tệ" đến mức nào (tính toán lỗi).
+- matplotlib (để vẽ biểu đồ): tạo ra các biểu đồ và đồ thị (như biểu đồ Loss và biểu đồ dự đoán).
 
-Tải dữ liệu
-# Tai toan bo du lieu tu 5 nam tro lai
-dat = yf.download('GOOGL', period='2y')
-# Luu vao file
-dat.to_csv('GOOGL_2y.csv')
+# Tải dữ liệu
+- Tai toan bo du lieu tu 5 nam tro lai
+    dat = yf.download('GOOGL', period='2y')
+- Luu vao file
+    dat.to_csv('GOOGL_2y.csv')
 
 Chức năng:
 Sử dụng thư viện yfinance để tải dữ liệu lịch sử giá cổ phiếu GOOGL (Alphabet Inc.).
