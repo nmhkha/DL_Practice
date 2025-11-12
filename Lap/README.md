@@ -347,12 +347,17 @@ Output:
 
 Visualize
 Loss
+
+
 ![alt text](image.png)
 
 Đồ thị loss cho thấy cả Train Loss và Validation Loss đều giảm ổn định theo thời gian và tiến tới giá trị rất nhỏ (≈ 0.001 → 0.0002). Hai đường loss gần như song song và không tách rời nhau, cho thấy mô hình không gặp hiện tượng overfitting. Điều này chứng tỏ LSTM đã học được xu hướng biến động của giá cổ phiếu và có khả năng khái quát tốt trên dữ liệu chưa từng thấy.
 
 
 Predicted vs Actual
+
+![alt text](image-1.png)
+
 Khả năng bám sát Xu hướng (Trend-Following): Mô hình thể hiện khả năng bám sát xu hướng chung của giá thực tế (Actual) một cách hiệu quả. Khi giá trị thực tăng hoặc giảm, giá trị dự đoán (Predicted) cũng di chuyển theo mô hình tương ứng.
 Hiện tượng Trễ (Lag): Quan sát thấy có một độ trễ (lag) nhỏ, điển hình là 1 nhịp (step). Đường dự đoán có xu hướng phản ứng chậm hơn một chút so với sự thay đổi đột ngột của giá thực tế.
 Biên độ Dao động (Volatility): Mô hình dự đoán có xu hướng "an toàn" hơn, tạo ra một đường cong mượt hơn. Nó dự đoán các đỉnh (peaks) thấp hơn và các đáy (troughs) cao hơn so với giá trị thực tế, cho thấy biên độ dao động của dự đoán bị giảm nhẹ.
