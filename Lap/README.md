@@ -157,13 +157,19 @@ Output
     - Validation: lấy từ sample 309 đến 374 (66 samples)
     - Test: từ sample 375 đến hết (67 samples)
 Output 
-Dữ liệu đã được chia theo thứ tự thời gian (time series split), không shuffle.
-Mỗi tập có dạng (samples, sequence length, features) cho LSTM/RNN input.
-Mục đích:
-X_train/y_train: huấn luyện mô hình.
-X_val/y_val: điều chỉnh tham số, tránh overfitting.
-X_test/y_test: đánh giá mô hình trên dữ liệu thực tế chưa thấy.
-Mô hình Deep Learning (LSTM)
+
+    Final splits:
+    X_train: (309, 60, 1) y_train: (309,)
+    X_val:   (66, 60, 1) y_val: (66,)
+    X_test:  (67, 60, 1) y_test: (67,)
+- Dữ liệu đã được chia theo thứ tự thời gian (time series split), không shuffle.
+- Mỗi tập có dạng (samples, sequence length, features) cho LSTM/RNN input.
+- Mục đích:
+- X_train/y_train: huấn luyện mô hình.
+- X_val/y_val: điều chỉnh tham số, tránh overfitting.
+- X_test/y_test: đánh giá mô hình trên dữ liệu thực tế chưa thấy.
+
+# Mô hình Deep Learning (LSTM)
 Khởi tạo lớp LSTM
 
 def __init__(self, input_size, hidden_size, num_layers, output_size):
