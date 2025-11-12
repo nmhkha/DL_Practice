@@ -69,7 +69,7 @@ Thành phần gây biến động kết quả
 - Chia tỷ lệ 70/15/15 theo time series
     
     
-    Cutoff index theo ti le 70/15/15 tren time series
+    # Cutoff index theo ti le 70/15/15 tren time series
         n_total = len(close)
         #Tao sequences, tong samples = n_total - SEQ_LEN
         n_samples = n_total - SEQ_LEN
