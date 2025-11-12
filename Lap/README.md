@@ -78,10 +78,7 @@ n_total: tổng số ngày.
 n_samples: tổng số sequence bạn có thể tạo với SEQ_LEN.
 Bạn chia train/val/test trước khi tạo sequences, để tránh leakage.
  Fit MinMaxScaler chỉ trên train
-# --- Fit scaler CHỈ trên phần train (tránh data leakage) ---
-# Tuy nhiên scaler cần dữ liệu dạng time-index trước khi tạo sequences.
-# Ta fit scaler trên phần 'raw' Close tương ứng với vùng train:
-# Range of raw rows included in train portion = train_samples + SEQ_LEN (vì first sample uses first SEQ_LEN days)
+
 train_raw_end = SEQ_LEN + train_samples #exclusive index for raw array slicing
 print("train_raw end index (exclusive): ", train_raw_end)      \
 
