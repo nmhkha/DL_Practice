@@ -68,6 +68,7 @@ Thành phần gây biến động kết quả
 - close là dataframe 1 cột, cần reshape sau này cho MinMaxScale
 - Chia tỷ lệ 70/15/15 theo time series
     
+    
     Cutoff index theo ti le 70/15/15 tren time series
         n_total = len(close)
         #Tao sequences, tong samples = n_total - SEQ_LEN
