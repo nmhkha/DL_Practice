@@ -49,7 +49,7 @@ Thành phần gây biến động kết quả
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(SEED)
 
-# Cau hinh
+# Cấu hình
     CSV_PATH = "GOOGL_2y.csv"
     SEQ_LEN = 60 # Window length (60 ngay) dùng 60 ngày trước để dự đoán ngày kế tiếp
     BATCH_SIZE = 32
@@ -93,8 +93,9 @@ Thành phần gây biến động kết quả
 - Sau đó transform toàn bộ chuỗi, bao gồm val/test. Đây là cách chuẩn để tránh data leakage.
 
 # Tạo sequences (sliding window)
-#tao sequences (sliding window)
+
     
+    #tao sequences (sliding window)
     X_list, y_list = [], []
     for i in range(SEQ_LEN, len(scaled_all)):
         X_list.append(scaled_all[i-SEQ_LEN:i, 0]) # window of length SEQ_LEN
@@ -115,35 +116,40 @@ Thành phần gây biến động kết quả
 - y_list: giá kế tiếp (next day).
 - Reshape X để có shape (samples, seq_len, n_features) cho LSTM/RNN.
 - y là vector (samples,) cho target.
+
 → Sliding window giúp “cắt” chuỗi dài thành các mẫu nhỏ mà mô hình có thể học được mối quan hệ giữa lịch sử giá và giá ngày tiếp theo.
 
 Output 
 
-Bạn có 502 ngày giá.
-Với SEQ_LEN = 60, bạn tạo được 442 sequences.
-Chia train/val/test theo 70/15/15 → tương ứng 309/66/67 sequences.
-train_raw_end = 369 dùng để fit scaler mà không rò rỉ thông tin từ validation/test.
-X đã sẵn sàng cho LSTM: (samples, seq_len, features)
-y là target kế tiếp.
-Chia train/val/test
-Xác định cutoff cho train/val/test
-sample_cut_train = train_samples
-sample_cut_val = train_samples + val_samples
-sample_cut_train = 309 → số sample dùng cho train.
-sample_cut_val = 309 + 66 = 375 → số sample kết thúc validation.
-Dựa trên các sample đã tạo từ sliding window (X, y).
+    Total days: 502, sequence samples: 442
+    Train samples: 309, Val samples: 66, Test samples: 67
+    train_raw end index (exclusive):  369
+    X shape: (442, 60, 1) y shape: (442,)
+- Bạn có 502 ngày giá.
+- Với SEQ_LEN = 60, bạn tạo được 442 sequences.
+- Chia train/val/test theo 70/15/15 → tương ứng 309/66/67 sequences.
+- train_raw_end = 369 dùng để fit scaler mà không rò rỉ thông tin từ validation/test.
+- X đã sẵn sàng cho LSTM: (samples, seq_len, features)
+- y là target kế tiếp.
+# Chia train/val/test
+- Xác định cutoff cho train/val/test
+    sample_cut_train = train_samples
+    sample_cut_val = train_samples + val_samples
+    sample_cut_train = 309 → số sample dùng cho train.
+    sample_cut_val = 309 + 66 = 375 → số sample kết thúc validation.
+    Dựa trên các sample đã tạo từ sliding window (X, y).
 
-Chia dữ liệu
-X_train = X[:sample_cut_train]
-y_train =y[:sample_cut_train]
+- Chia dữ liệu
+    X_train = X[:sample_cut_train]
+    y_train =y[:sample_cut_train]
 
 
-X_val = X[sample_cut_train:sample_cut_val]
-y_val = y[sample_cut_train:sample_cut_val]
+    X_val = X[sample_cut_train:sample_cut_val]
+    y_val = y[sample_cut_train:sample_cut_val]
 
 
-X_test = X[sample_cut_val:]
-y_test = y[sample_cut_val:]
+    X_test = X[sample_cut_val:]
+    y_test = y[sample_cut_val:]
 
 Train: lấy từ sample 0 đến 308 (309 samples)
 
