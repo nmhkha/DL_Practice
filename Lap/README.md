@@ -327,20 +327,23 @@ Validation phase
 
 
 MAE: độ chênh lệch trung bình tuyệt đối giữa dự đoán và thực tế.
+
 MSE: trung bình bình phương sai số (phạt lỗi lớn hơn).
+
 RMSE: căn bậc hai của MSE → đơn vị cùng với giá, dễ trực quan hơn.
+
 Output:
 
-Test MAE: 8.0702
-MAE là độ chênh lệch trung bình tuyệt đối giữa dự đoán và giá thật.
-Ở đây, đơn vị là đơn vị giá gốc (ví dụ USD, VND,… tùy dữ liệu).
-Nghĩa là trung bình mỗi dự đoán lệch khoảng 8.07 so với giá thực tế.
-MAE cho thấy lỗi dự đoán “trung bình” của model, không phạt quá nặng các outlier.
+    Test MAE: 8.0702
+    MAE là độ chênh lệch trung bình tuyệt đối giữa dự đoán và giá thật.
+    Ở đây, đơn vị là đơn vị giá gốc (ví dụ USD, VND,… tùy dữ liệu).
+    Nghĩa là trung bình mỗi dự đoán lệch khoảng 8.07 so với giá thực tế.
+    MAE cho thấy lỗi dự đoán “trung bình” của model, không phạt quá nặng các outlier.
 
-Test RMSE: 10.1410
-RMSE là căn bậc hai của MSE, tức là trung bình bình phương sai số.
-Vì bình phương nên các lỗi lớn bị phạt nặng hơn → RMSE thường ≥ MAE.
-Ở đây, RMSE = 10.14, nghĩa là model mỗi dự đoán sai khoảng ±10 đơn vị về giá, và lỗi lớn hơn sẽ ảnh hưởng nhiều hơn đến RMSE.
+    Test RMSE: 10.1410
+    RMSE là căn bậc hai của MSE, tức là trung bình bình phương sai số.
+    Vì bình phương nên các lỗi lớn bị phạt nặng hơn → RMSE thường ≥ MAE.
+    Ở đây, RMSE = 10.14, nghĩa là model mỗi dự đoán sai khoảng ±10 đơn vị về giá, và lỗi lớn hơn sẽ ảnh hưởng nhiều hơn đến RMSE.
 
 Visualize
 Loss
